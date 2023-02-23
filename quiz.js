@@ -65,44 +65,7 @@ function displayQuestion() {
   }
 }
 
-function displayResults() {
-  questionElement.style.display = "none";
-  choicesElement.style.display = "none";
-  submitButton.style.display = "none";
-  
-  // Créer un conteneur pour les résultats
-  const resultsContainer = document.createElement("div");
 
-  // Parcourir toutes les questions du quiz
-  for (let i = 0; i < quiz.length; i++) {
-    const result = document.createElement("div");
-    result.innerHTML = `<strong>${quiz[i].question}</strong>`;
-
-    if (i === quiz.length - 1) {
-      result.innerHTML += "<br>";
-    }
-
-    const answer = document.createElement("div");
-    answer.textContent = `Réponse : ${quiz[i].answer}`;
-
-    if (quiz[i].choices.indexOf(quiz[i].answer) === -1) {
-      // Incorrect answer
-      result.classList.add("incorrect");
-    } else {
-      // Correct answer
-      result.classList.add("correct");
-    }
-
-    result.appendChild(answer);
-    resultsContainer.appendChild(result);
-  }
-
-  // Ajouter le conteneur des résultats à la page
-  resultElement.appendChild(resultsContainer);
-
-  // Afficher les résultats
-  resultElement.style.display = "block";
-}
 
 
 
@@ -119,6 +82,37 @@ resetButton.addEventListener('click', function() {
 });
 
 
+// Display quiz results
+function displayResults() {
+  questionElement.style.display = "none";
+  choicesElement.style.display = "none";
+  submitButton.style.display = "none";
+  resultElement.textContent = `Score : ${score} / ${quiz.length}`;
+  
+  for (let i = 0; i < quiz.length; i++) {
+    const result = document.createElement("div");
+    result.innerHTML = `<strong>${quiz[i].question}</strong>`;
+    if (i === quiz.length - 1) {
+      result.innerHTML += "<br>";
+    }
+    const answer = document.createElement("div");
+    answer.textContent = `Réponse : ${quiz[i].answer}`;
+    
+    // Check if answer is correct or incorrect
+    if (quiz[i].choices.indexOf(quiz[i].answer) === -1) {
+      // Incorrect answer
+      result.classList.add("incorrect");
+      answer.classList.add("incorrect");
+    } else {
+      // Correct answer
+      result.classList.add("correct");
+      answer.classList.add("correct");
+    }
+    
+    result.appendChild(answer);
+    resultElement.appendChild(result);
+  }
+}
 
 
 
